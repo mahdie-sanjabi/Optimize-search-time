@@ -32,7 +32,7 @@ def search_in_hash_table(hash_table, target):
 
 # Example Usage
 file_path = "usernames.txt"  # Path to the file containing usernames
-target_username = "admin"   # Username to search for
+target_username = "zigzag"   # Username to search for
 
 # Read the database from the file
 database = read_database_from_file(file_path)
