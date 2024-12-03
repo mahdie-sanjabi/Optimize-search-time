@@ -20,6 +20,7 @@
 2. **def binary_search:**
 
 برای پیاده‌سازی جستجوی دودویی (Binary Search)، دیتابیس باید از قبل مرتب شده باشد. این الگوریتم به صورت بازگشتی یا تکراری پیاده‌سازی می‌شود و هر بار لیست را به دو نیم تقسیم می‌کند تا موقعیت هدف را پیدا کند. 
+
 3. **def read_database_from_file:**
 
 یک تابع است که نام های کاربری را از یک فایل میخواند و آنها را به صورت لیست برمی گرداند
@@ -33,5 +34,12 @@
 target_username = "admin"
 ```
 
-
-
+## نحوه محاسبه زمان اجرا
+برای محاسبه زمان اجرا ما از کتابخانه time استفاده میکنیم. نمونه کد نحوه محاسبه:
+```python
+# Measure execution time
+start_time_linear_search = time.time()
+result_linear_search = linear_search(database, target_username)
+end_time_linear_search = time.time()
+print(f"Username in linear_search '{target_username}' found at index {result_linear_search}.")
+```
