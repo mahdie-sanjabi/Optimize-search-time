@@ -97,12 +97,15 @@ class UserManager:
 if __name__ == "__main__":
     manager = UserManager()
     while True:
-        action = input("Enter 'add' to add a username, or 'check' to check if a username exists: ").strip().lower()
-        username = input("Enter username: ").strip()
+        action = input("Enter '+' to add a username, 'C' to check if a username exists and '00' for exit: ").strip().lower()
 
-        if action == 'add':
+        if action == '+':
+            username = input("Enter username: ").strip()
             manager.add_user(username)
-        elif action == 'check':
+        elif action == 'C':
+            username = input("Enter username: ").strip()
             manager.check_username(username)
+        elif action == '00':
+            break
         else:
             print("Invalid action. Try again.")
