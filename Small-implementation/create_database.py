@@ -21,14 +21,22 @@ def create_database():
 
 def create_table():
     mydb = mysql.connector.connect(
-      host="localhost",
-      user="root",
-      password="",
-      database="user_search"
+        host="localhost",
+        user="root",
+        password="",
+        database="user_search"
     )
 
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE TABLE userconnect (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), password VARCHAR(255))")
+
+    # اصلاح دستور SQL برای بستن پرانتز
+    mycursor.execute("""
+        CREATE TABLE IF NOT EXISTS userconnect (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(255) UNIQUE
+        )
+    """)
+    mydb.close()
 
 
 # for add users in database
@@ -39,6 +47,37 @@ def connect_to_db():
         password="",
         database="user_search"
     )
+
+def add_username(username):
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="user_search"
+        )
+
+        if connection.is_connected():
+            cursor = connection.cursor()
+
+            query = "SELECT * FROM userconnect WHERE username = %s"
+            cursor.execute(query, (username,))
+            result = cursor.fetchone()
+
+            if result:
+                print(f"The username is {username} duplicate and could not be saved.")
+            else:
+
+                insert_query = "INSERT INTO userconnect (username) VALUES (%s)"
+                cursor.execute(insert_query, (username,))
+                connection.commit()
+                print(f"{username} saved successfully.")
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("The connection to the database was closed.")
 
 def user_exists(cursor, username):
     cursor.execute("SELECT COUNT(*) FROM userconnect WHERE username = %s", (username,))
@@ -61,15 +100,17 @@ def insert_users_from_file(connection, file_path):
 def start_database():
     try:
         create_database()
-        print("Database created successfully")
-    except:
-        print('The database has been created.')
+        print("Database created successfully.")
+    except Exception as e:
+        print(f"The database has been created or an error occurred: {e}")
+
     try:
         create_table()
-        print("Table created successfully")
-    except:
-        print('The table has been created.')
+        print("Table created successfully.")
+    except Exception as e:
+        print(f"The table has been created or an error occurred: {e}")
 
-    # db_connection = connect_to_db()
-    # insert_users_from_file(db_connection,'../usernames.txt')
+# db_connection = connect_to_db()
+# insert_users_from_file(db_connection,'../usernames.txt')
+
 
