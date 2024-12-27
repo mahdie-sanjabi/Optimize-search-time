@@ -13,7 +13,6 @@ def linear_search(database, target):
     return -1  # Username not found
 
 
-
 def binary_search(database, target):
     """
     Perform binary search to find a username in the sorted database.
@@ -43,10 +42,11 @@ def read_database_from_file(file_path):
         return [line.strip() for line in file]
 
 
-
 # Example Usage
 file_path = "usernames.txt"  # Path to the file containing usernames
-target_username = "zigzag"   # Username to search for
+
+# Get target username
+target_username = input("Enter the username to search for: ")  # Username to search for
 
 # Read the database from the file
 database = read_database_from_file(file_path)
@@ -56,6 +56,8 @@ start_time_linear_search = time.time()
 result_linear_search = linear_search(database, target_username)
 end_time_linear_search = time.time()
 
+# Binary search requires the database to be sorted
+database.sort()
 start_time_binary_search = time.time()
 result_binary_search = binary_search(database, target_username)
 end_time_binary_search = time.time()
@@ -63,12 +65,10 @@ end_time_binary_search = time.time()
 # Output the result
 if result_linear_search != -1:
     print(f"Username in linear_search '{target_username}' found at index {result_linear_search}.")
-
-    print(f"Username in binary_search '{target_username}' found at index {result_binary_search }.\n")
+    print(f"Username in binary_search '{target_username}' found at index {result_binary_search}.")
 else:
     print(f"Username '{target_username}' not found.")
 
 # Print execution time
 print(f"Execution time in linear_search: {end_time_linear_search - start_time_linear_search:.6f} seconds")
-
-print(f"Execution time in binary_search: {end_time_binary_search - start_time_binary_search:.20f} seconds")
+print(f"Execution time in binary_search: {end_time_binary_search - start_time_binary_search:.6f} seconds")
